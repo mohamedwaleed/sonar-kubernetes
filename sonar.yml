@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+   name: sonar
+   labels:
+    app: sonar
+spec:
+  containers:
+  - name: sonar
+    image: sonarqube
+    ports:
+    - name: sonar-port
+      containerPort: 9000
+    env:
+      - name: SONARQUBE_JDBC_USERNAME
+        valueFrom:
+          secretKeyRef:
+            name: mysql-secret
+            key: sonar_username
+      - name: SONARQUBE_JDBC_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: mysql-secret
+            key: sonar_password
+      - name: SONARQUBE_JDBC_URL
+        value: jdbc:mysql://mysql-service:30000/sonar?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true

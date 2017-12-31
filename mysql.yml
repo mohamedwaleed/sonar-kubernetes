@@ -29,3 +29,10 @@ spec:
             key: sonar_password
       - name: MYSQL_DATABASE
         value: sonar
+    volumeMounts:
+      - mountPath: "/var/lib/mysql"
+        name: myvolume
+  volumes:
+    - name: myvolume
+      persistentVolumeClaim:
+        claimName: nfsclaim
